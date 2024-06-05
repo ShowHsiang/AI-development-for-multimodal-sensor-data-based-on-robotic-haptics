@@ -1,4 +1,4 @@
-# CUDA_VISIBLE_DEVICES=0 python dataprocess.py
+# CUDA_VISIBLE_DEVICES=0 python datatocsv.py
 import os
 import re
 import pandas as pd
@@ -50,6 +50,6 @@ def convert_files_in_directory(input_directory, output_directory):
             print(f'Converted {filename} to {csv_file_path}')
 
 if __name__ == "__main__":
-    input_directory = 'dataset/Texture_Recognition_dataset1/20240521 CTL101-129'  # Replace with your input directory
-    output_directory = 'dataset/Texture_Recognition_datasetcsv/ctl_101-129'  # Replace with your output directory
+    input_directory = 'dataset/Pressure_Texture_dataset_raw/20240521 CTL101-129'  # Replace with your input directory
+    output_directory = 'dataset/Pressure_Texture_dataset_csv/ctl_101-129'  # Replace with your output directory
     convert_files_in_directory(input_directory, output_directory)
