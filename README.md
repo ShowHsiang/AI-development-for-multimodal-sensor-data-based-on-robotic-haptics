@@ -2,6 +2,6 @@
 
 This is the Benjamin TEE Research Group 'AI development for multimodal sensor data based on robotic haptics' Project Repo. And this is the members' table:
 
-| Mentor    | Intern       | Intern           |
-| --------- | -------------- | ----------- | 
-| YANG ZIJIE | XIANG XIAONENG | PARATHADASAN ANUSUYA ABINAYA | 
+|Supervisior | Mentor    | Intern       | Intern           |
+| ---------- | --------- | -------------- | ----------- | 
+|A/P Benjamin TEE | YANG ZIJIE | XIANG XIAONENG | PARATHADASAN ANUSUYA ABINAYA | 
