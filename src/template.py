@@ -1,4 +1,4 @@
-# CUDA_VISIBLE_DEVICES=1 python template1.py
+# CUDA_VISIBLE_DEVICES=1 python template.py
 import torch
 import os
 from transformers import (
