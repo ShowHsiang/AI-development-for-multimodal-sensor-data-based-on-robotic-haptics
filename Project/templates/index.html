@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fabric Description Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Fabric Description Generator</h1>
+        <form action="/" method="post" enctype="multipart/form-data">
+            <label for="file">Upload Sensor Data File:</label>
+            <input type="file" name="file" id="file" required>
+            <button type="submit">Generate Description</button>
+        </form>
+        {% if results %}
+        <h2>Generated Fabric Descriptions</h2>
+        <ul>
+            {% for result in results %}
+            <li>
+                <strong>Fabric:</strong> {{ result.fabric }}<br>
+                <strong>Description:</strong> {{ result.description }}<br>
+                <strong>Tokens per second:</strong> {{ result.tokens_per_second }}
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+</body>
+</html>
