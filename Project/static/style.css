@@ -1,34 +1,54 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     background-color: #f0f0f0;
     margin: 0;
     padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
 .container {
-    max-width: 800px;
+    width: 80%;
+    max-width: 1200px;
     margin: auto;
     background: white;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
 }
 
-h1, h2 {
+h1 {
     color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+p {
+    text-align: center;
+    font-size: 16px;
+    color: #666;
 }
 
 form {
     margin-bottom: 20px;
+    text-align: center;
 }
 
 label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #333;
 }
 
-input[type="file"] {
+input[type="file"], select {
     display: block;
-    margin-bottom: 10px;
+    margin: 0 auto 20px auto;
+    padding: 10px;
+    width: 80%;
+    max-width: 400px;
 }
 
 button {
@@ -39,10 +59,17 @@ button {
     border: none;
     cursor: pointer;
     transition: background 0.3s;
+    border-radius: 5px;
 }
 
 button:hover {
     background: #0056b3;
+}
+
+h2 {
+    color: #333;
+    text-align: center;
+    margin-top: 20px;
 }
 
 ul {
@@ -55,4 +82,9 @@ li {
     padding: 10px;
     background: #f9f9f9;
     border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+strong {
+    color: #333;
 }
