@@ -9,9 +9,17 @@
 <body>
     <div class="container">
         <h1>Fabric Description Generator</h1>
+        <p>I am an experienced expert in the field of fabrics and am able to structurally describe and score different aspects of fabric touch. Please give me a fabric data file.</p>
         <form action="/" method="post" enctype="multipart/form-data">
             <label for="file">Upload Sensor Data File:</label>
             <input type="file" name="file" id="file" required>
+            <label for="model">Select a Model:</label>
+            <select name="model" id="model" required>
+                <option value="Mistral-7B-Instruct-v0.3">Mistral-7B-Instruct-v0.3</option>
+                <option value="gemma-2-9b-it">gemma-2-9b-it</option>
+                <option value="Meta-Llama-3.1-8B-Instruct">Meta-Llama-3.1-8B-Instruct</option>
+                <option value="Mistral-Nemo-Instruct-2407">Mistral-Nemo-Instruct-2407</option>
+            </select>
             <button type="submit">Generate Description</button>
         </form>
         {% if results %}
@@ -19,9 +27,9 @@
         <ul>
             {% for result in results %}
             <li>
-                <strong>Fabric:</strong> {{ result.fabric }}<br>
-                <strong>Description:</strong> {{ result.description }}<br>
-                <strong>Tokens per second:</strong> {{ result.tokens_per_second }}
+                <strong style="color: #007BFF;">Fabric:</strong> <span style="color: #333;">{{ result.fabric }}</span><br>
+                <strong style="color: #28a745;">Description:</strong> <span style="color: #666;">{{ result.description|safe }}</span><br>
+                <strong style="color: #dc3545;">Tokens per second:</strong> <span style="color: #333;">{{ result.tokens_per_second }}</span>
             </li>
             {% endfor %}
         </ul>
