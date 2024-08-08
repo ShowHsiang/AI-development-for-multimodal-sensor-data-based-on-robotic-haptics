@@ -1,3 +1,4 @@
+# CUDA_VISIBLE_DEVICES=2 python app.py
 import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "2"
 from flask import Flask, request, render_template, redirect, url_for
@@ -13,7 +14,7 @@ from transformers import (
 import warnings
 from peft import PeftModel
 import time
-
+import shutil
 
 warnings.filterwarnings("ignore")
 
@@ -135,9 +136,10 @@ def instr_prompt(content):
 def index():
     global device
     if request.method == 'POST':
-        if 'file' not in request.files:
+        if 'file' not in request.files or 'model' not in request.form:
             return redirect(request.url)
         file = request.files['file']
+        model_name = request.form['model']
         if file.filename == '':
             return redirect(request.url)
         if file:
@@ -176,14 +178,31 @@ def index():
             df.columns = ['Sample Number', 'Name']
             df['Sample Number'] = df['Sample Number'].apply(lambda x: f"S{x.strip()[:-1]}")
             df['Sample Number'] = df['Sample Number'].str.replace(' ', '')
+            # fabric_dict = pd.Series(df['Name'].values, index=df['Sample Number']).to_dict()
+            
+            df_encoded = pd.read_excel('../dataset/data processing/encoded_labels_fabric_names.xlsx')
+            fabric_dict = {}
+            missing_fabrics = []
+            for _, row in df_encoded.iterrows():
+                encoded_label = row['Encoded Label']
+                fabric_number = row['Fabric Number']
+                matched_fabric = df[df['Sample Number'] == fabric_number]
+                if not matched_fabric.empty:
+                    fabric_name = matched_fabric['Name'].values[0]
+                    fabric_dict[encoded_label] = fabric_name
+                else:
+                    missing_fabrics.append(fabric_number)
+                    print(f"Fabric number {fabric_number} not found in dataset_descriptionEN.xlsx")
 
-            fabric_dict = pd.Series(df['Name'].values, index=df['Sample Number']).to_dict()
+            if missing_fabrics:
+                print(f"Missing fabrics: {missing_fabrics}")
+            
 
             def get_fabric_name(label):
                 return fabric_dict.get(label, "Unknown Fabric")
 
             model, tokenizer, device, config = load_model(
-                model_path=os.path.join('../ckpts', 'gemma-2-9b-it'),
+                model_path=os.path.join('../ckpts', model_name),
                 quantization='bf16'
             )
             model.eval()
@@ -206,7 +225,12 @@ def index():
                     "num_return_sequences": 1
                 }
                 description, tokens_per_second = generate_text(model, tokenizer, device, final_prompt, args)
-                results.append({'fabric': fabric_name, 'description': description, 'tokens_per_second': tokens_per_second})
+                response_text = description.split("### Response:")[1].strip().replace('\n', '<br>').replace('**', '<b>').replace('**', '</b>')
+                results.append({'fabric': fabric_name, 'description': response_text, 'tokens_per_second': tokens_per_second})
+            
+            # 清空uploads文件夹
+            shutil.rmtree('uploads')
+            os.makedirs('uploads')
 
             return render_template('index.html', results=results)
 
